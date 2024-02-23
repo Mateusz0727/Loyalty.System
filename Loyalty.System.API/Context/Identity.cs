@@ -6,14 +6,14 @@ namespace Loyalty.System.API.Context
     public static class Identity
     {
         #region Id()
-        public static long Id(this IPrincipal principal)
+        public static string Id(this IPrincipal principal)
         {
-            return Convert.ToInt64((principal as ClaimsPrincipal).FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return (principal as ClaimsPrincipal).FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
-        public static long Id(this IIdentity identity)
+        public static string Id(this IIdentity identity)
         {
-            return Convert.ToInt64((identity as ClaimsIdentity).FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return (identity as ClaimsIdentity).FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
         #endregion
     }

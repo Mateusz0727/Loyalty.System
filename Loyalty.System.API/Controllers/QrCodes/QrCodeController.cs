@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace Loyalty.System.API.Controllers
+namespace Loyalty.System.API.Controllers.QrCodes
 {
     [AllowAnonymous]
     [Route("api/[controller]")]
