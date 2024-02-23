@@ -1,13 +1,19 @@
-﻿using Loyalty.System.Data.Model;
+﻿using AutoMapper;
+using Loyalty.System.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Loyalty.System.API.Services
 {
     public class BaseService
     {
-        public BaseContext Context { get; }
-        public BaseService(BaseContext baseContext) {
-            Context = baseContext;
+        protected BaseContext Context { get; }
+        protected IMapper Mapper { get; }
+
+        public BaseService(IMapper mapper, BaseContext context)
+        {
+            Mapper = mapper;
+            Context = context;
+
         }
     }
 }

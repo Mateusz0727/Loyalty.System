@@ -1,6 +1,4 @@
-﻿
-
-namespace Loyalty.System.API.Models
+﻿namespace Loyalty.System.API.Models.Qrcode
 {
     public class QrCode
     {

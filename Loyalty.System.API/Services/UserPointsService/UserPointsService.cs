@@ -1,11 +1,14 @@
-﻿using Loyalty.System.Data.Model;
+﻿using AutoMapper;
+using Loyalty.System.API.Models;
+using Loyalty.System.Data.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Loyalty.System.API.Services.UserPointsService
 {
     public class UserPointsService : BaseService
     {
-        public UserPointsService(BaseContext baseContext) : base(baseContext)
+        public UserPointsService(IMapper mapper, BaseContext context) : base(mapper, context)
         {
 
         }
