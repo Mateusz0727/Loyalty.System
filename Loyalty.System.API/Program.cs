@@ -1,13 +1,18 @@
 using Authentication.System.API.Extensions;
+using AutoMapper;
+using Loyalty.System.API.Configuration;
+using Loyalty.System.API.Models;
+using Loyalty.System.API.Models.Settings;
 using Loyalty.System.Data.Model;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Drawing;
-using MongoDB.Driver.Core.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +23,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 string sqlServer = "";
 
-
+try
+{
     builder.Services.AddDbContext<BaseContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"))
             );
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToString());
+}
 
 builder.Services.AddAuthorizationCore(options =>
 {
@@ -54,7 +65,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "JWT Authorization header using the Bearer scheme."
     });
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
-                {
+{
                     {
                         new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                         {
@@ -66,19 +77,62 @@ builder.Services.AddSwaggerGen(c =>
                         },
                         new string[] {}
                     }
-                });
 });
+});
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+#region AutoMapper
+var mappingCongig = new MapperConfiguration(mc =>
+     mc.AddProfile(
+ new AutoMapperInitializator()
+ )
+);
+IMapper mapper = mappingCongig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+
+#endregion
+var googleSettings = new GoogleSettings();
+var bindJwtSettings = new JWTConfig();
+builder.Configuration.Bind("JsonWebTokenKeys", bindJwtSettings);
+builder.Services.AddSingleton(bindJwtSettings);
+builder.Services.AddSingleton(googleSettings);
+builder.Services.Configure<GoogleSettings>(builder.Configuration.GetSection("GoogleAuth"));
+builder.Services.Configure<JWTConfig>(builder.Configuration.GetSection("JsonWebTokenKeys"));
+
+
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer("Jwt", options =>
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+
+.AddCookie()
+.AddGoogle(options =>
+
 {
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-});
-       
-                builder.Services.RegisterServices();
+    options.ClientId = "19271665004-83jjellktus6s3o000gc90g685lhrp91.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+
+})
+               .AddJwtBearer("Jwt", options =>
+               {
+                   options.RequireHttpsMetadata = false;
+                   options.SaveToken = true;
+                   options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                   {
+                       ValidateIssuerSigningKey = bindJwtSettings.ValidateIssuerSigningKey,
+                       IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(bindJwtSettings.IssuerSigningKey)),
+                       ValidateIssuer = bindJwtSettings.ValidateIssuer,
+                       ValidIssuer = bindJwtSettings.ValidIssuer,
+                       ValidateAudience = bindJwtSettings.ValidateAudience,
+                       ValidAudience = bindJwtSettings.ValidAudience,
+                       RequireExpirationTime = bindJwtSettings.RequireExpirationTime,
+                       ValidateLifetime = bindJwtSettings.RequireExpirationTime,
+                       ClockSkew = TimeSpan.FromDays(1),
+                   };
+               });
+builder.Services.RegisterServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

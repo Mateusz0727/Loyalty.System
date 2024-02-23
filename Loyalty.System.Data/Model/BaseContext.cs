@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Loyalty.System.API.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Loyalty.System.Data.Model
             ConnectionString = Configuration.GetConnectionString("DefaultConnectionString");
 
         }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserPoints> UserPoints { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
  => optionsBuilder.UseSqlServer(ConnectionString);
@@ -33,6 +35,7 @@ namespace Loyalty.System.Data.Model
         {
            
                 modelBuilder.Entity<UserPoints>().ToTable("UserPoints");
+                modelBuilder.Entity<User>().ToTable("User");
            
       
         }
