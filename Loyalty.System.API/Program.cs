@@ -111,8 +111,8 @@ builder.Services.AddAuthentication(options =>
 .AddGoogle(options =>
 
 {
-    options.ClientId = "19271665004-83jjellktus6s3o000gc90g685lhrp91.apps.googleusercontent.com";
-    options.ClientSecret = "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";
+    options.ClientId =googleSettings.clientId;
+    options.ClientSecret = googleSettings.clientSecret;
 
 })
                .AddJwtBearer("Jwt", options =>
