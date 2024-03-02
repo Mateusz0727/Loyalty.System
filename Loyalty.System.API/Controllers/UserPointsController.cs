@@ -1,10 +1,11 @@
-﻿using Loyalty.System.API.Services.UserPointsService;
+﻿using Loyalty.System.API.Models.Qrcode;
+using Loyalty.System.API.Services.UserPointsService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Loyalty.System.API.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserPointsController : Controller
@@ -21,10 +22,10 @@ namespace Loyalty.System.API.Controllers
         {
             return _userPointsService.getUserPoints(id);
         }
-        [HttpPut("id")]
-        public async Task addUserPoint(string id)
+        [HttpPost]
+        public async Task addUserPoint([FromBody] QrCode qrCode)
         {
-            _userPointsService.addUserPoint(id);
+            _userPointsService.addUserPoint(qrCode.Id);
         }
     }
 }

@@ -20,7 +20,11 @@
     },
     "Profil 1": {
       "commandName": "IIS",
-      "launchUrl": "http://localhost:4002"
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:4002/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",
