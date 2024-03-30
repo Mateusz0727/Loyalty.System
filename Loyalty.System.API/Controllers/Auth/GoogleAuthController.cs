@@ -4,6 +4,7 @@ using Loyalty.System.API.Models.Settings;
 using Loyalty.System.API.Services;
 using Loyalty.System.API.Services.Auth;
 using Loyalty.System.API.Services.GoogleAuthService;
+using Loyalty.System.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
