@@ -11,5 +11,7 @@ namespace Loyalty.System.Data.Model
         public string Id { get; set; }
         public ushort Points { get; set; }
         public ushort CountOfPrize { get; set ; }
+
+        public string QrCodeToken { get; set; }
     }
 }

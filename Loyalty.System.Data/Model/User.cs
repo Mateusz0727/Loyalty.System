@@ -1,5 +1,5 @@
 
-namespace Loyalty.System.API.Models;
+namespace Loyalty.System.Data.Model;
 
 public class User 
 {
@@ -9,7 +9,7 @@ public class User
     public int Id { get; set; }
 
     public string? UserName { get; set; }
-
+    public bool IsAdmin { get; set; }
 
     public string? Email { get; set; }
 
@@ -22,5 +22,6 @@ public class User
 
     public DateTime DateCreatedUtc { get; set; }
     public DateTime DateModifiedUtc { get; set; }
+
 
 }

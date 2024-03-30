@@ -6,6 +6,7 @@
         public string? UserName { get; set; }
         public TimeSpan Validaty { get; set; }
         public string? RefreshToken { get; set; }
+        public bool isAdmin { get; set; }
         public long Id { get; set; }
         public string? EmailId { get; set; }
         public string GuidId { get; set; }

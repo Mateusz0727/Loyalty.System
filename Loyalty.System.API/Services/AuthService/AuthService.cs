@@ -3,6 +3,7 @@ using Loyalty.System.API.Configuration;
 using Loyalty.System.API.Helpers;
 using Loyalty.System.API.Models;
 using Loyalty.System.API.Models.Login;
+using Loyalty.System.Data.Model;
 using Microsoft.AspNetCore.Identity;
 namespace Loyalty.System.API.Services.Auth;
 public class AuthService
@@ -32,6 +33,7 @@ public class AuthService
 
         Token = JWTHelper.GenTokenKey(new UserTokens()
         {
+            isAdmin=user.IsAdmin,
             EmailId = user.Email,
             GuidId = user.PublicId,
             UserName = user.UserName,

@@ -1,6 +1,7 @@
 ﻿
 using Loyalty.System.API.Configuration;
 using Loyalty.System.API.Models;
+using Loyalty.System.Data.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,9 +20,11 @@ namespace Loyalty.System.API.Helpers
                 new Claim(ClaimTypes.Name, userAccounts.UserName),
                 new Claim(ClaimTypes.Email, userAccounts.EmailId),
                 new Claim(ClaimTypes.NameIdentifier, user.PublicId.ToString()),
-                new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddDays(1).ToString("MMM ddd dd yyyy HH:mm:ss tt"))
+                new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddDays(1).ToString("MMM ddd dd yyyy HH:mm:ss tt")),
+             
             };
-
+            if (userAccounts.isAdmin)
+              claims.Add(new Claim(type: "isAdmin", value: userAccounts.isAdmin.ToString()));
             return claims;
         }
         public static IEnumerable<Claim> GetClaims(this UserTokens userAccounts, out long Id, User user)
@@ -51,6 +54,7 @@ namespace Loyalty.System.API.Helpers
                 UserToken.UserName = model.UserName;
                 UserToken.Id = model.Id;
                 UserToken.GuidId = model.GuidId;
+                UserToken.isAdmin = model.isAdmin;
                 return UserToken;
             }
             catch (Exception)

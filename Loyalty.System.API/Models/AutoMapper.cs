@@ -1,6 +1,8 @@
 ﻿
 using AutoMapper;
 using Loyalty.System.API.Models.Register;
+using Loyalty.System.API.Models.User;
+using Loyalty.System.Data.Model;
 
 namespace Loyalty.System.API.Models
 {
@@ -13,7 +15,8 @@ namespace Loyalty.System.API.Models
 
         protected void UserModels()
         {
-            CreateMap<User, RegisterFormModel>().ReverseMap().ForMember(x => x.UserName, m => m.MapFrom(s => s.SurName));
+          //  CreateMap<User, RegisterFormModel>().ReverseMap().ForMember(x => x.UserName, m => m.MapFrom(s => s.SurName));
+            CreateMap<UserPoints, UserPointsModel>().ReverseMap();
         }
 
     }

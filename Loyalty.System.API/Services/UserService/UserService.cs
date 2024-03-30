@@ -31,7 +31,13 @@ public class UserService : BaseService
 
             SetPassword(entity, user.Password);
             SetEntity(entity);
+            UserPoints userPoints = new()
+            { Id = entity.PublicId
+            
+            };
+            
             Context.Add(entity);
+            Context.Add(userPoints);
             Context.SaveChanges();
         }
         catch (Exception ex)

@@ -40,7 +40,9 @@ builder.Services.AddAuthorizationCore(options =>
     options.DefaultPolicy = new AuthorizationPolicyBuilder(schemes)
       .RequireAuthenticatedUser()
       .Build();
-
+    options.AddPolicy("AdminPolicy", new AuthorizationPolicyBuilder(schemes).RequireAuthenticatedUser().RequireClaim("isAdmin").Build());
+    
+   
     options.AddPolicy("JwtPolicy", new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .AddAuthenticationSchemes("Jwt")
