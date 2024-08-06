@@ -1,19 +1,9 @@
 {
   "profiles": {
-    "Loyalty.System.API": {
-      "commandName": "Project",
+    "IIS": {
+      "commandName": "IIS",
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7181;http://localhost:4002"
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "https://192.168.0.118",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -21,23 +11,19 @@
     "Profil 1": {
       "commandName": "IIS",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:4002/swagger",
+      "launchUrl": "https://localhost/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "nativeDebugging": false
     }
   },
-  "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost:4002",
-      "sslPort": 0
-    },
-    "iisExpress": {
-      "applicationUrl": "http://localhost:9733",
-      "sslPort": 44338
+      "applicationUrl": "https://localhost",
+      "sslPort": 443
     }
   }
 }

@@ -18,7 +18,7 @@ public class UserService : BaseService
    
     public async Task<User> GetByEmailAsync(string email)
     {
-        User entity = Context.User.FirstOrDefault(x=>x.Email==email);
+        User entity = Context.Users.FirstOrDefault(x=>x.Email==email);
         return entity;
 
 
