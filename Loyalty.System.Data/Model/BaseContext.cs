@@ -56,9 +56,11 @@ namespace Loyalty.System.Data.Model
                 Surname = "admin",
                 UserName = "admin@admin.pl"
             };
+            
             adminUser.Password = _hasher.HashPassword(adminUser, "zaq1@WSX");
-
+            
             modelBuilder.Entity<User>().HasData(adminUser);
+            modelBuilder.Entity<UserPoints>().HasData(new UserPoints() { CountOfPrize = 0,Id=adminUser.PublicId,Points=0,QrCodeToken="" });
         }
     }
 }

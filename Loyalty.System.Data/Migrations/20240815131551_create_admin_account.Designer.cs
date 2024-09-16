@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Loyalty.System.Data.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20240806162635_create_admin_account")]
+    [Migration("20240815131551_create_admin_account")]
     partial class create_admin_account
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,8 +76,8 @@ namespace Loyalty.System.Data.Migrations
                             EmailConfirmed = true,
                             GivenName = "admin",
                             IsAdmin = true,
-                            Password = "AQAAAAEAACcQAAAAEFwjyHqxyofwdpNmBq+7YUc3QNWs8YOnXKDdVkfgA6ZPBZvRx8cS9ZboEOa9ZcFOHw==",
-                            PublicId = "f53b0bf3-1c74-43b7-9124-bd99749333e6",
+                            Password = "AQAAAAEAACcQAAAAEHKPH+B0FgGZue/91O5Xuy36W/RJWIre4Lk6Tw2XwNVOQKsR4DZgfpG6DTQztryPBw==",
+                            PublicId = "14f6cb4b-294e-421e-8054-a8fbb34205dc",
                             Surname = "admin",
                             UserName = "admin@admin.pl"
                         });
@@ -101,6 +101,15 @@ namespace Loyalty.System.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserPoints", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "14f6cb4b-294e-421e-8054-a8fbb34205dc",
+                            CountOfPrize = 0,
+                            Points = 0,
+                            QrCodeToken = ""
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -26,8 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 try
 {
     builder.Services.AddDbContext<BaseContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"))
-            );
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString") ));
 }
 catch (Exception ex)
 {
